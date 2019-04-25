@@ -1,10 +1,14 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from os import curdir, sep
+import sys
 import cgi
 import socket
 import json
 
-PORT_NUMBER = 8080
+#Input form command line argument
+STORE_PORT = int(sys.argv[1])
+BANK_HOST_IP = int(sys.argv[2])
+BANK_PORT = int(sys.argv[3])
 dataset = {}
 
 
@@ -48,7 +52,7 @@ class GetHandler(BaseHTTPRequestHandler):
             return
 
         except IOError:
-            self.send_error(404, "File Not Found: %s" % self.path)
+            self.send_error(404, "Webpage Not Found: %s" % self.path)
     
     def do_POST(self):
         # Parse the form data posted
@@ -89,17 +93,16 @@ class GetHandler(BaseHTTPRequestHandler):
 #connect and send data to bank and get response
 def communicate_with_bank():
     s = socket.socket()
-    #defining port 12345 as the bank is working on port 12345
-    port = 12345
-    s.connect(('127.0.0.1', port))
+    s.connect((BANK_HOST_IP, BANK_PORT))
     s.send(bytes(json.dumps(dataset), "utf-8"))
     response_msg = s.recv(1024).decode("utf-8")
     print (response_msg)
     s.close()
     return response_msg
 
+
 if __name__ == '__main__':
     from http.server import HTTPServer
-    server = HTTPServer(('localhost', PORT_NUMBER), GetHandler)
+    server = HTTPServer(('localhost', STORE_PORT), GetHandler)
     print ('Starting server, use <Ctrl-C> to stop')
     server.serve_forever()

@@ -1,3 +1,4 @@
+import sys
 import socket
 import json           
   
@@ -5,16 +6,16 @@ import json
 s = socket.socket()          
 print ("Socket for Bank successfully created")
   
-# reserve port 12345 for banking purpose 
-port = 12345                
-  
-# Next bind to the port 
+# reserve BANK_PORT from input argument for banking purpose 
+BANK_PORT = int(sys.argv[1])
+
+# Next bind to the BANK_PORT 
 # we have not typed any ip in the ip field 
 # instead we have inputted an empty string 
 # this makes the server listen to requests  
 # coming from other computers on the network 
-s.bind(('', port))         
-print ("socket binded to %s" %(port) )
+s.bind(('', BANK_PORT))         
+print ("socket binded to %s" %(BANK_PORT) )
   
 # put the socket into listening mode 
 s.listen(5)      
