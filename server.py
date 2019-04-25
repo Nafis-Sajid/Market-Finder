@@ -1,8 +1,12 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from os import curdir, sep
 import cgi
+import socket
+import json
 
 PORT_NUMBER = 8080
+dataset = {}
+
 
 # This class will handles any incoming request from
 # the browser
@@ -75,10 +79,21 @@ class GetHandler(BaseHTTPRequestHandler):
             else:
                 # Regular form value
                 self.wfile.write(bytes('\t%s=%s\n' % (field, form[field].value), "utf-8"))
-                print('%s\n' % (form[field].value))
+                dataset[field] = form[field].value
+        
+        #connect to bank
+        communicate_with_bank()
         return
 
 
+#connect and send data to bank
+def communicate_with_bank():
+    s = socket.socket()
+    port = 12345
+    s.connect(('127.0.0.1', port))
+    s.send(bytes(json.dumps(dataset), "utf-8"))
+    print (s.recv(1024).decode("utf-8"))
+    s.close()
 
 if __name__ == '__main__':
     from http.server import HTTPServer
