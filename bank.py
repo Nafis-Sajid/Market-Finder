@@ -1,12 +1,11 @@
 import socket
 import json           
   
-# next create a socket object 
+#a socket object 
 s = socket.socket()          
-print ("Socket successfully created")
+print ("Socket for Bank successfully created")
   
-# reserve a port on your computer in our 
-# case it is 12345 but it can be anything 
+# reserve port 12345 for banking purpose 
 port = 12345                
   
 # Next bind to the port 
@@ -21,21 +20,21 @@ print ("socket binded to %s" %(port) )
 s.listen(5)      
 print ("socket is listening")
   
-# a forever loop until we interrupt it or  
-# an error occurs 
+# a forever loop until we interrupt it or an error occurs 
 while True: 
   
    # Establish connection with client. 
    c, addr = s.accept()      
    print ('Got data from', addr)
 
-   #receive data from server
+   #receive byte from server and decode it into string
    received = c.recv(1024).decode("utf-8")
-   dataset = json.loads(received)
-   print(dataset)
+   #convert into dictionary
+   received_info = json.loads(received)
+   print(received_info)
   
    # send a thank you message to the client.  
    c.send(bytes('Thank you for connecting', "utf-8")) 
-  
+   
    # Close the connection with the client 
    c.close() 

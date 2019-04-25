@@ -81,19 +81,22 @@ class GetHandler(BaseHTTPRequestHandler):
                 self.wfile.write(bytes('\t%s=%s\n' % (field, form[field].value), "utf-8"))
                 dataset[field] = form[field].value
         
-        #connect to bank
-        communicate_with_bank()
+        #connect to bank and get response from bank
+        response_msg = communicate_with_bank()
         return
 
 
-#connect and send data to bank
+#connect and send data to bank and get response
 def communicate_with_bank():
     s = socket.socket()
+    #defining port 12345 as the bank is working on port 12345
     port = 12345
     s.connect(('127.0.0.1', port))
     s.send(bytes(json.dumps(dataset), "utf-8"))
-    print (s.recv(1024).decode("utf-8"))
+    response_msg = s.recv(1024).decode("utf-8")
+    print (response_msg)
     s.close()
+    return response_msg
 
 if __name__ == '__main__':
     from http.server import HTTPServer
