@@ -75,7 +75,7 @@ class GetHandler(BaseHTTPRequestHandler):
             else:
                 # Regular form value
                 self.wfile.write(bytes('\t%s=%s\n' % (field, form[field].value), "utf-8"))
-                print('\t%s=%s\n' % (field, form[field].value))
+                print('%s\n' % (form[field].value))
         return
 
 
