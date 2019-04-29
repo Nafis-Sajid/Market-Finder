@@ -1,12 +1,57 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Home Page</title>
-    </head>
-    <body>
-        <h1>Index page!</h1>
-        to go to test page:
-        <a href="test.html">go to test</a>
-    </body>
+
+<head>
+    <meta charset="utf-8">
+    <title>Online shop</title>
+</head>
+
+<body bgcolor="#76e2d4">
+    <h1 align='center'>BD CD store</h1>
+    <table border="2" align='center' cellpadding=10>
+        <tr>
+            <th> CD Name</th>
+            <th> Author </th>
+            <th> Product ID </th>
+            <th> Price </th>
+        </tr>
+        <tr>
+            <td> Arnob Song Collection </td>
+            <td> Arnob </td>
+            <td> 1 </td>
+            <td> 40 </td>
+        </tr>
+        <tr>
+            <td> Azam Khan song collection</td>
+            <td> Azam Khan </td>
+            <td> 2 </td>
+            <td> 30 </td>
+        </tr>
+    </table>
+    <br><br><br>
+    <h3 align='center'> If you want to buy this product please fill out the form:</h3>
+    <br><br><br>
+    <form action="server.py" method="POST" align='center'>
+        Please enter the product <b>id</b> you want to buy:<br>
+        <input type="number" min="1" max="2" name="itemid" required>
+        <br><br>
+        Enter product <b>quantity</b>:<br>
+        <input type="number" min="1" max="10" name="quantity" required>
+        <br><br>
+        Please enter your <b>first name</b>:<br>
+        <input type="text" name="first" required>
+        <br><br>
+        Please enter your <b>family name</b>:<br>
+        <input type="text" name="family" required>
+        <br><br>
+        Please enter your <b>postcode</b>:<br>
+        <input type="text" name="postcode" required>
+        <br><br>
+        Please enter your <b>credit card number</b>:<br>
+        <input type="text" name="creditcard">
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+
 </html>
