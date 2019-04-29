@@ -87,37 +87,10 @@ class GetHandler(BaseHTTPRequestHandler):
                 # self.wfile.write(bytes('\tUploaded %s as "%s" (%d bytes)\n' % (field, field_item.filename, file_len), "utf-8"))
             else:
                 dataset[field] = form[field].value
+                print(form[field].value)
         
-        # calculating the total cost for buying the product(s)
-        dataset["cost"] = calculate_cost()
-        del dataset["quantity"]
-        del dataset["itemid"]
-        # connect to bank and get response from bank
-        response_msg = communicate_with_bank()
-        self.wfile.write(bytes(response_msg, "utf-8"))
         return
 
-
-# function to calculate the total cost
-def calculate_cost():
-    cost = int(dataset["quantity"]) * pricelist[dataset["itemid"]]
-    return cost
-
-
-# connect and send data to bank and get response
-def communicate_with_bank():
-    # socket object
-    s = socket.socket()
-    # connect to bank host ip and bank port number
-    s.connect((BANK_HOST_IP, BANK_PORT))
-    # send the data has been input in the form
-    s.send(bytes(json.dumps(dataset), "utf-8"))
-    # get response from bank
-    response_msg = s.recv(1024).decode("utf-8")
-    print(response_msg)
-    # socket close
-    s.close()
-    return response_msg
 
 
 # main function
