@@ -87,7 +87,7 @@ class GetHandler(BaseHTTPRequestHandler):
                 # self.wfile.write(bytes('\tUploaded %s as "%s" (%d bytes)\n' % (field, field_item.filename, file_len), "utf-8"))
             else:
                 dataset[field] = form[field].value
-                print(form[field].value)
+                print(field , " ", form[field].value)
         
         return
 
